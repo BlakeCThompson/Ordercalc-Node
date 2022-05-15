@@ -1,0 +1,13 @@
+{
+  "name": "test-project",
+  "scripts": {
+    "start-dev": "node lib/server-development",
+    "start": "node lib/server-production"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
+}
