@@ -1,10 +1,12 @@
 import TierInterface from "../interfaces/TierInterface"
+import BillingResults from "./BillingResults"
+import UsageData from "./UsageData"
 
 class SeasonalRates {
     seasonName:string
     inclusiveMonths:string[]
     tiers:TierInterface[]
-    constructor(seasonName, inclusiveMonths, tiers){
+    constructor(seasonName:string, inclusiveMonths:string[], tiers:TierInterface[]){
       this.seasonName = seasonName
       this.inclusiveMonths = inclusiveMonths
       this.tiers = tiers
@@ -36,11 +38,23 @@ class SeasonalRates {
         }) != -1;
       }
 
-      calculateBill(kwh:number){
-        let remainingKwhToBeBilled = kwh
+      calculateBill(usageData:UsageData){
+        let dueWithPanels = this.calculateSimpleBill(usageData.kwhPurchased)
+        let kwhPurchasedWithoutPanels = usageData.kwhPurchased + 
+        (usageData.customerGeneratedKwh - usageData.customerExportedKwh)
+        let dueWithoutPanels = this.calculateSimpleBill(usageData.kwhPurchased + kwhPurchasedWithoutPanels)
+        return new BillingResults(dueWithPanels, dueWithoutPanels)
+      }
+      calculateSimpleBill(kwh:number){
         let totalDue = 0
         for (var tier of this.tiers){
-          let amountInThisTier = Math.min((kwh - tier.inclusiveBeginKwh),tier.nonInclusiveEndKwh) 
+          let amountInThisTier = 0
+          if (kwh < tier.nonInclusiveEndKwh){
+            amountInThisTier = (kwh - tier.inclusiveBeginKwh)
+          }
+          if (tier.nonInclusiveEndKwh && kwh > tier.nonInclusiveEndKwh){
+            amountInThisTier = tier.nonInclusiveEndKwh - tier.inclusiveBeginKwh
+          }
           if (amountInThisTier <= 0){
             break
           }

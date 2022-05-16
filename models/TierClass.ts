@@ -3,9 +3,16 @@ class Tier{
     inclusiveBeginKwh:number;
     nonInclusiveEndKwh:number;
     rate:number;
-    constructor(inclusiveBeginKwh:number, nonInclusiveEndKwh:number, rate:number) {
+    constructor(inclusiveBeginKwh:number, nonInclusiveEndKwh:number|string, rate:number) {
         this.inclusiveBeginKwh = inclusiveBeginKwh;
-        this.nonInclusiveEndKwh = nonInclusiveEndKwh;
+        let validatedNonInclusiveEndKwh:number
+        if (!Number.isInteger(nonInclusiveEndKwh)) {
+          validatedNonInclusiveEndKwh = Number.POSITIVE_INFINITY
+        }
+        else {
+          validatedNonInclusiveEndKwh = Number.parseInt(nonInclusiveEndKwh.toString())
+        }
+        this.nonInclusiveEndKwh = validatedNonInclusiveEndKwh;
         this.rate = rate
       }
 }

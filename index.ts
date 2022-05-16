@@ -1,12 +1,15 @@
 import SeasonalRates from "./models/SeasonalRates";
 import Tier from "./models/TierClass";
 import BillingPolicy from "./models/BillingPolicy";
+import UsageData from "./models/UsageData";
 
-const express = require('express');
+import express from "express";
+import BillingResults from "./models/BillingResults";
 
-const app = express();
 
-const port = process.env.PORT || 3000
+const app:express = express();
+
+const port = 3000
 
 app.get('/', function(req, res){
   res.statusCode = 200
@@ -14,33 +17,29 @@ app.get('/', function(req, res){
   res.end('<h1>Welcome to the order calculator!</h1>')
 })
 
-let summer = new SeasonalRates(
-  'Summer',
-  ["JUNE","JULY","AUGUST","SEPTEMBER"],
-  [new Tier(0,400,9.0279), new Tier(400, Infinity, 11.7210)])
-
-let nonSummer = new SeasonalRates("Non-Summer",["OCTOBER","NOVEMBER","DECEMBER","JANUARY","FEBRUARY","MARCH","APRIL","May"],
-[new Tier(0,400,7.9893), new Tier(400, Infinity, 10.3725)])
-
-
-var billingPolicy = new BillingPolicy([summer,nonSummer])
-
 var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 
 app.get('/calculateSavings', function(req,res){
   let kwhUsed = req.query.kWh_used
   let kwhGenerated = req.query.kWh_generated
+  let kwhExported = req.query.kWh_exported
   let month = req.query.month ?? months[new Date().getMonth()]
   let powerCompany = "RMP_UTAH"
-  let usageData = new UsageData(kwhUsed,kwhGenerated,month)
-
-  billingPolicy.
+  let policy = BillingPolicy.GetPoliciesFromJson().find(policy=>policy.name == powerCompany)
+  let customerGeneratedAndUsedKwh = kwhGenerated - kwhExported
+  let usageData = new UsageData(kwhUsed,kwhGenerated,kwhExported,month)
+  let due = policy.calculateBill(usageData)
 
   res.setHeader('Content-Type','application/json')
-  let z = x * y
-  console.log(z)
-  res.end('z =' + z)
+  res.end(JSON.stringify(due))
 })
+
+app.get('/companies', function(req,res){
+
+  res.setHeader('Content-Type','application/json')
+  res.end(JSON.stringify(BillingPolicy.GetPoliciesFromJson()))
+})
+
 
 app.listen(port, function() {
 	console.log(`listening on port ${port}`);

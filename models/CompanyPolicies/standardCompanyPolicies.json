@@ -1,0 +1,106 @@
+{
+    "policies": [
+        {
+            "name":"RMP_UTAH",
+            "SeasonalRatesArray": [
+                {
+                    "seasonName": "summer",
+                    "inclusiveMonths": [
+                        "JUNE",
+                        "JULY",
+                        "AUGUST",
+                        "SEPTEMBER"
+                    ],
+                    "tiers": [
+                        {
+                            "inclusiveBeginKwh": 0,
+                            "nonInclusiveEndKwh": 400,
+                            "rate": 9.0279
+                        },
+                        {
+                            "inclusiveBeginKwh": 400,
+                            "nonInclusiveEndKwh": "Inf",
+                            "rate": 11.7210
+                        }
+                    ]
+                },
+                {
+                    "seasonName": "non-summer",
+                    "inclusiveMonths": [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "October",
+                        "November",
+                        "December"
+                    ],
+                    "tiers": [
+                        {
+                            "inclusiveBeginKwh": 0,
+                            "nonInclusiveEndKwh": 400,
+                            "rate": 7.9893
+                        },
+                        {
+                            "inclusiveBeginKwh": 400,
+                            "nonInclusiveEndKwh": "Inf",
+                            "rate": 10.3725
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"TEST",
+            "SeasonalRatesArray": [
+                {
+                    "seasonName": "summer",
+                    "inclusiveMonths": [
+                        "JUNE",
+                        "JULY",
+                        "AUGUST",
+                        "SEPTEMBER"
+                    ],
+                    "tiers": [
+                        {
+                            "inclusiveBeginKwh": 0,
+                            "nonInclusiveEndKwh": 400,
+                            "rate": 9.0279
+                        },
+                        {
+                            "inclusiveBeginKwh": 400,
+                            "nonInclusiveEndKwh": "Inf",
+                            "rate": 11.7210
+                        }
+                    ]
+                },
+                {
+                    "seasonName": "non-summer",
+                    "inclusiveMonths": [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "October",
+                        "November",
+                        "December"
+                    ],
+                    "tiers": [
+                        {
+                            "inclusiveBeginKwh": 0,
+                            "nonInclusiveEndKwh": 400,
+                            "rate": 7.9893
+                        },
+                        {
+                            "inclusiveBeginKwh": 400,
+                            "nonInclusiveEndKwh": "Inf",
+                            "rate": 10.3725
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
