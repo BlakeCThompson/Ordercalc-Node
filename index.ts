@@ -23,10 +23,12 @@ app.get('/calculateSavings', function(req,res){
   let kwhUsed = Number.parseInt(req.query.kWh_used ?? 0)
   let kwhGenerated = Number.parseInt(req.query.kWh_generated ?? 0)
   let kwhExported = Number.parseInt(req.query.kWh_exported ?? 0)
+  if(kwhExported > kwhGenerated) {
+    throw Error('Impossible to have more power exported than was generated. Please check kWh_generated and kWh_exported')
+  }
   let month = req.query.month ?? months[new Date().getMonth()]
   let powerCompany = "RMP_UTAH"
   let policy = BillingPolicy.GetPoliciesFromJson().find(policy=>policy.name == powerCompany)
-  let customerGeneratedAndUsedKwh = kwhGenerated - kwhExported
   let usageData = new UsageData(kwhUsed,kwhGenerated,kwhExported,month)
   let due = policy.calculateBill(usageData)
 
