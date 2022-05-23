@@ -2,6 +2,7 @@
     "policies": [
         {
             "name":"RMP_UTAH",
+            "baseHookupFee":10.0,
             "SeasonalRatesArray": [
                 {
                     "seasonName": "summer",
@@ -15,46 +16,47 @@
                         {
                             "inclusiveBeginKwh": 0,
                             "nonInclusiveEndKwh": 400,
-                            "rate": 9.0279
+                            "rate": 0.090279
                         },
                         {
                             "inclusiveBeginKwh": 400,
                             "nonInclusiveEndKwh": "Inf",
-                            "rate": 11.7210
+                            "rate": 0.117210
                         }
                     ],
-                    "solarBuybackRate": 5.160
+                    "solarBuybackRate": 0.05160
                 },
                 {
                     "seasonName": "non-summer",
                     "inclusiveMonths": [
+                        "October",
+                        "November",
+                        "December",
                         "January",
                         "February",
                         "March",
                         "April",
-                        "May",
-                        "October",
-                        "November",
-                        "December"
+                        "May"
                     ],
                     "tiers": [
                         {
                             "inclusiveBeginKwh": 0,
                             "nonInclusiveEndKwh": 400,
-                            "rate": 7.9893
+                            "rate": 0.079893
                         },
                         {
                             "inclusiveBeginKwh": 400,
                             "nonInclusiveEndKwh": "Inf",
-                            "rate": 10.3725
+                            "rate": 0.103725
                         }
                     ],
-                    "solarBuybackRate": 4.462 
+                    "solarBuybackRate": 0.04462 
                 }
             ]
         },
         {
             "name":"TEST",
+            "baseHookupFee":10.0,
             "SeasonalRatesArray": [
                 {
                     "seasonName": "summer",
@@ -75,7 +77,8 @@
                             "nonInclusiveEndKwh": "Inf",
                             "rate": 11.7210
                         }
-                    ]
+                    ],
+                    "solarBuybackRate": 0
                 },
                 {
                     "seasonName": "non-summer",
@@ -100,7 +103,8 @@
                             "nonInclusiveEndKwh": "Inf",
                             "rate": 10.3725
                         }
-                    ]
+                    ],  
+                    "solarBuybackRate": 0
                 }
             ]
         }

@@ -9,6 +9,8 @@ import TierInterface from "../interfaces/TierInterface";
 class BillingPolicy implements BillingPolicyInterface{
     seasonalRatesArray:SeasonalRatesInterface[]
     name:string
+    baseHookupFee: number;
+
     constructor(seasonalRatesArray:SeasonalRatesInterface[], name:string){
         this.seasonalRatesArray = seasonalRatesArray
         this.name = name
@@ -33,9 +35,11 @@ class BillingPolicy implements BillingPolicyInterface{
     static GetPoliciesFromJson() {
         let policies:BillingPolicyInterface[] = []
         for (var policy of companyPolicies.policies){
+            let baseHookupFee = policy.baseHookupFee
             let seasonalRates:SeasonalRatesInterface[] = []
             for (var seasonalRate of policy.SeasonalRatesArray){
                 let tiers:TierInterface[] = []
+                let buyBackRate = seasonalRate.solarBuybackRate
                 for (var jsonTier of seasonalRate.tiers) {
                     var tier = new Tier(
                         jsonTier.inclusiveBeginKwh,
@@ -46,7 +50,9 @@ class BillingPolicy implements BillingPolicyInterface{
                 seasonalRates.push(new SeasonalRates(
                     seasonalRate.seasonName,
                     seasonalRate.inclusiveMonths,
-                    tiers))
+                    tiers,
+                    buyBackRate,
+                    baseHookupFee))
             }
             policies.push(new BillingPolicy(seasonalRates,policy.name))
         }

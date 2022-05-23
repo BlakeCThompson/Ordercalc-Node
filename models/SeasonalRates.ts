@@ -8,12 +8,14 @@ class SeasonalRates implements SeasonalRatesInterface{
     inclusiveMonths:string[]
     solarBuybackRate:number
     tiers:TierInterface[]
-    constructor(seasonName:string, inclusiveMonths:string[], tiers:TierInterface[], buyBackRate:number = 0){
+    baseHookupFee:number
+    constructor(seasonName:string, inclusiveMonths:string[], tiers:TierInterface[], buyBackRate:number = 0, baseHookupFee:number){
       this.seasonName = seasonName
       this.inclusiveMonths = inclusiveMonths
       this.tiers = tiers
       this.validateTiers()
       this.solarBuybackRate = buyBackRate
+      this.baseHookupFee = baseHookupFee
     }
     
     validateTiers(){
@@ -42,10 +44,16 @@ class SeasonalRates implements SeasonalRatesInterface{
       }
 
       calculateBill(usageData:UsageData){
-        let dueWithPanels = this.calculateSimpleBill(usageData.kwhPurchased) - this.calculateBuybackAmount(usageData.customerExportedKwh)
-        let kwhPurchasedWithoutPanels = usageData.kwhPurchased + 
-        (usageData.customerGeneratedKwh - usageData.customerExportedKwh)
+        let dueWithPanels = this.calculateSimpleBill(usageData.kwhPurchased) 
+          + this.baseHookupFee 
+          - this.calculateBuybackAmount(usageData.customerExportedKwh)
+
+        let kwhPurchasedWithoutPanels = usageData.kwhPurchased 
+          + usageData.customerGeneratedKwh 
+          - usageData.customerExportedKwh
+
         let dueWithoutPanels = this.calculateSimpleBill(kwhPurchasedWithoutPanels)
+          + this.baseHookupFee
         return new BillingResults(dueWithPanels, dueWithoutPanels)
       }
       calculateSimpleBill(kwh:number){
@@ -63,7 +71,7 @@ class SeasonalRates implements SeasonalRatesInterface{
           }
           totalDue += tier.rate * amountInThisTier
         }
-        return totalDue
+        return totalDue 
       }
 
       calculateBuybackAmount(kwhExported:number) {

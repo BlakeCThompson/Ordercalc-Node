@@ -12,11 +12,11 @@ class BillingResults implements BillingResultsInterface {
         this.amountDueWithoutPanels = amountDueWithoutPanels
     }
     protected getAmountDueWithPanels() {
-        return this.formatter.format(this.amountDueWithPanels/100)
+        return this.formatter.format(this.amountDueWithPanels)
     }
 
     protected getAmountDueWithoutPanels() {
-        return this.formatter.format(this.amountDueWithoutPanels/100)
+        return this.formatter.format(this.amountDueWithoutPanels)
     }
 
     getFormattedDue() {
