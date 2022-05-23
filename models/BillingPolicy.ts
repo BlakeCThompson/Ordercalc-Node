@@ -6,7 +6,7 @@ import companyPolicies from "./CompanyPolicies/standardCompanyPolicies.json";
 import BillingPolicyInterface from "../interfaces/BillingPolicyInterface";
 import Tier from "./TierClass";
 import TierInterface from "../interfaces/TierInterface";
-class BillingPolicy {
+class BillingPolicy implements BillingPolicyInterface{
     seasonalRatesArray:SeasonalRatesInterface[]
     name:string
     constructor(seasonalRatesArray:SeasonalRatesInterface[], name:string){

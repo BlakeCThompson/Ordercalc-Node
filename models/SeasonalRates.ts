@@ -1,16 +1,19 @@
+import SeasonalRatesInterface from "../interfaces/SeasonalRatesInterface"
 import TierInterface from "../interfaces/TierInterface"
 import BillingResults from "./BillingResults"
 import UsageData from "./UsageData"
 
-class SeasonalRates {
+class SeasonalRates implements SeasonalRatesInterface{
     seasonName:string
     inclusiveMonths:string[]
+    solarBuybackRate:number
     tiers:TierInterface[]
-    constructor(seasonName:string, inclusiveMonths:string[], tiers:TierInterface[]){
+    constructor(seasonName:string, inclusiveMonths:string[], tiers:TierInterface[], buyBackRate:number = 0){
       this.seasonName = seasonName
       this.inclusiveMonths = inclusiveMonths
       this.tiers = tiers
       this.validateTiers()
+      this.solarBuybackRate = buyBackRate
     }
     
     validateTiers(){
@@ -39,7 +42,7 @@ class SeasonalRates {
       }
 
       calculateBill(usageData:UsageData){
-        let dueWithPanels = this.calculateSimpleBill(usageData.kwhPurchased)
+        let dueWithPanels = this.calculateSimpleBill(usageData.kwhPurchased) - this.calculateBuybackAmount(usageData.customerExportedKwh)
         let kwhPurchasedWithoutPanels = usageData.kwhPurchased + 
         (usageData.customerGeneratedKwh - usageData.customerExportedKwh)
         let dueWithoutPanels = this.calculateSimpleBill(kwhPurchasedWithoutPanels)
@@ -61,6 +64,10 @@ class SeasonalRates {
           totalDue += tier.rate * amountInThisTier
         }
         return totalDue
+      }
+
+      calculateBuybackAmount(kwhExported:number) {
+        return kwhExported * this.solarBuybackRate
       }
 }
 export default SeasonalRates;

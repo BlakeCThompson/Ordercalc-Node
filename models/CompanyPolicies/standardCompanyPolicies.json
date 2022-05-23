@@ -23,7 +23,7 @@
                             "rate": 11.7210
                         }
                     ],
-                    "solarPayoutRate": 5.160
+                    "solarBuybackRate": 5.160
                 },
                 {
                     "seasonName": "non-summer",
@@ -49,7 +49,7 @@
                             "rate": 10.3725
                         }
                     ],
-                    "solarPayoutRate": 4.462 
+                    "solarBuybackRate": 4.462 
                 }
             ]
         },
