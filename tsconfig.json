@@ -4,6 +4,8 @@
       "target": "es6",
       "rootDir": "./",
       "esModuleInterop": true,
+      "sourceMap": true,
+      "outDir": "out",
       "resolveJsonModule": true,
     }
 }

@@ -1,7 +1,7 @@
 {
   "name": "test-project",
   "scripts": {
-    "start-dev": "node lib/server-development",
+    "start-dev": "ts-node index.ts",
     "start": "node lib/server-production",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",

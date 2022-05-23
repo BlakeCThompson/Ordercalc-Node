@@ -20,9 +20,9 @@ app.get('/', function(req, res){
 var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 
 app.get('/calculateSavings', function(req,res){
-  let kwhUsed = req.query.kWh_used
-  let kwhGenerated = req.query.kWh_generated
-  let kwhExported = req.query.kWh_exported
+  let kwhUsed = Number.parseInt(req.query.kWh_used ?? 0)
+  let kwhGenerated = Number.parseInt(req.query.kWh_generated ?? 0)
+  let kwhExported = Number.parseInt(req.query.kWh_exported ?? 0)
   let month = req.query.month ?? months[new Date().getMonth()]
   let powerCompany = "RMP_UTAH"
   let policy = BillingPolicy.GetPoliciesFromJson().find(policy=>policy.name == powerCompany)
@@ -31,7 +31,7 @@ app.get('/calculateSavings', function(req,res){
   let due = policy.calculateBill(usageData)
 
   res.setHeader('Content-Type','application/json')
-  res.end(JSON.stringify(due))
+  res.end(JSON.stringify(due.getFormattedDue()))
 })
 
 app.get('/companies', function(req,res){

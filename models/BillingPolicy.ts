@@ -37,12 +37,10 @@ class BillingPolicy {
             for (var seasonalRate of policy.SeasonalRatesArray){
                 let tiers:TierInterface[] = []
                 for (var jsonTier of seasonalRate.tiers) {
-                    console.log(jsonTier)
                     var tier = new Tier(
                         jsonTier.inclusiveBeginKwh,
                         jsonTier.nonInclusiveEndKwh,
                         jsonTier.rate)
-                    console.log(tier)
                     tiers.push(tier)
                 }
                 seasonalRates.push(new SeasonalRates(

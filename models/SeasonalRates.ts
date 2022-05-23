@@ -42,17 +42,17 @@ class SeasonalRates {
         let dueWithPanels = this.calculateSimpleBill(usageData.kwhPurchased)
         let kwhPurchasedWithoutPanels = usageData.kwhPurchased + 
         (usageData.customerGeneratedKwh - usageData.customerExportedKwh)
-        let dueWithoutPanels = this.calculateSimpleBill(usageData.kwhPurchased + kwhPurchasedWithoutPanels)
+        let dueWithoutPanels = this.calculateSimpleBill(kwhPurchasedWithoutPanels)
         return new BillingResults(dueWithPanels, dueWithoutPanels)
       }
       calculateSimpleBill(kwh:number){
         let totalDue = 0
         for (var tier of this.tiers){
           let amountInThisTier = 0
-          if (kwh < tier.nonInclusiveEndKwh){
+          if (kwh >= tier.inclusiveBeginKwh && kwh < tier.nonInclusiveEndKwh){
             amountInThisTier = (kwh - tier.inclusiveBeginKwh)
           }
-          if (tier.nonInclusiveEndKwh && kwh > tier.nonInclusiveEndKwh){
+          else if (kwh >= tier.nonInclusiveEndKwh){
             amountInThisTier = tier.nonInclusiveEndKwh - tier.inclusiveBeginKwh
           }
           if (amountInThisTier <= 0){
