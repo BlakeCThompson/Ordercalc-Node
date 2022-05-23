@@ -1,4 +1,5 @@
-class BillingResults {
+import BillingResultsInterface from '../interfaces/BillingResultsInterface'
+class BillingResults implements BillingResultsInterface {
     protected amountDueWithPanels:number
     protected amountDueWithoutPanels:number
     private formatter = new Intl.NumberFormat('en-US', {
@@ -10,11 +11,11 @@ class BillingResults {
         this.amountDueWithPanels = amountDueWithPanels
         this.amountDueWithoutPanels = amountDueWithoutPanels
     }
-    getAmountDueWithPanels() {
+    protected getAmountDueWithPanels() {
         return this.formatter.format(this.amountDueWithPanels/100)
     }
 
-    getAmountDueWithoutPanels() {
+    protected getAmountDueWithoutPanels() {
         return this.formatter.format(this.amountDueWithoutPanels/100)
     }
 

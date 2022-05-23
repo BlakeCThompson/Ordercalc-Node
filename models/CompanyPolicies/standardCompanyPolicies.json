@@ -22,7 +22,8 @@
                             "nonInclusiveEndKwh": "Inf",
                             "rate": 11.7210
                         }
-                    ]
+                    ],
+                    "solarPayoutRate": 5.160
                 },
                 {
                     "seasonName": "non-summer",
@@ -47,7 +48,8 @@
                             "nonInclusiveEndKwh": "Inf",
                             "rate": 10.3725
                         }
-                    ]
+                    ],
+                    "solarPayoutRate": 4.462 
                 }
             ]
         },
